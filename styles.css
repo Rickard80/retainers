@@ -1,0 +1,68 @@
+:root {
+  --spacing-double: 2rem;
+  --spacing: 1rem;
+  --spacing-half: 0.5rem;
+  --spacing-quarter: 0.25rem;
+
+  --border-radius: 3px;
+
+  --color-highlight: #ffe376;
+  --color-error: #b90909;
+  --color-background: #efefef;
+}
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+}
+
+html {
+  background-color: black;
+}
+
+body {
+  padding-bottom: var(--spacing-double);
+  background-color: var(--color-background);
+  min-height: 80vh;
+}
+
+h1 {
+  margin: var(--spacing-half);
+  margin-bottom: var(--spacing-quarter);
+}
+
+header, footer {
+  padding: 0.25rem 0px;
+
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  background-color: black;
+}
+
+header > .flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px auto;
+  padding: 0px var(--spacing);
+  max-width: min(max(500px, 75vw), 1000px);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+header button {
+  min-width: 50px;
+  padding: 0.25rem;
+}
+
+footer {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+a {
+  color: var(--color-highlight);
+}
