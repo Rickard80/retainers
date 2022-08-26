@@ -1,2 +1,5 @@
 # retainers
-Hirelings for d20
+
+An example of how to set up native custom elements.
+
+The file retainer-app/retainer-element.js contains the whole magic, where it creates a shadow-dom, and loads templates which is sent in as `content` in a `render()` method. The rest of the elements then `extends RetainerElement`, which uses `render()` to get hold of the template that contains all HTML.
