@@ -1,0 +1,127 @@
+<template>
+  <style>
+    :host {
+      display: flex;
+      contain: content;
+
+      padding: var(--spacing-half);
+      min-width: 300px;
+      max-width: 350px;
+      width: 100%;
+
+      box-sizing: border-box;
+    }
+
+    .wrapper {
+      position: relative;
+      width: 100%;
+      padding: var(--spacing);
+      border: 1px solid #000;
+      border-radius: var(--border-radius);
+      box-shadow: 0px 2px 2px 0px #999;
+      box-sizing: border-box;
+      background-color: white;
+    }
+
+    .wrapper::before,
+    .wrapper::after
+    {
+      content: '';
+      position: absolute;
+      z-index: -2;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      height: 2px;
+      background-color: #000;
+      filter: blur(2px);
+    }
+
+    .wrapper::before {
+      transform: skewY(2deg);
+    }
+    .wrapper::after {
+      transform: skewY(-2deg);
+    }
+
+
+    h3 {
+      margin-bottom: var(--spacing-quarter);
+    }
+
+    main {
+      display: flex;
+      gap: var(--spacing);
+    }
+
+    main > div {
+      flex: 1 1 100%;
+    }
+
+    .abilities > div,
+    .hit-points, .armor-class {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--spacing-quarter);
+    }
+
+    .armor-class,
+    .abilities > div:nth-child(2n) {
+      background-color: #eee;
+    }
+
+    #description {
+      font-style: italic;
+      line-height: 1.4rem;
+      padding-bottom: var(--spacing-quarter);
+    }
+
+    #description::first-letter,
+    #equipment::first-letter {
+      text-transform:capitalize;
+    }
+
+    #portrait {
+      display: grid;
+      align-items: center;
+      justify-items: center;
+
+      border: 3px double #ccc;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      color: #aaa;
+    }
+
+  </style>
+
+  <div class="wrapper">
+    <header id="description">
+      [description]
+    </header>
+
+    <main>
+      <div class="stats">
+        <div class="abilities">
+          <div>Strength     <span id="ability_str">±0</span></div>
+          <div>Dexterity    <span id="ability_dex">±0</span></div>
+          <div>Constitution <span id="ability_con">±0</span></div>
+          <div>Intelligence <span id="ability_int">±0</span></div>
+          <div>Wisdom       <span id="ability_wis">±0</span></div>
+          <div>Charisma     <span id="ability_cha">±0</span></div>
+        </div>
+        <div class="hit-points">Hit points <span id="hit_points">0</span></div>
+        <div class="armor-class">AC <span id="armor_class">0</span></div>
+      </div>
+
+      <div id="portrait"></div>
+    </main>
+
+    <footer class="equipment">
+      <h3>Equipment</h3>
+      <div id="equipment">
+        [equipment]
+      </div>
+    </footer>
+  </div>
+
+</template>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Retainers are (human) Fighters who start a level 1 and gain XP as a PC. A retainer is always hired by a specific PC." />
+    <meta name="keywords" content="generator, retainer, companion, npc, neutral player character, dnd, d&D, osr, d20, dungeons and dragons" />
+
+    <title>Retainers</title>
+
+    <script type="module">
+      import {RetainerApp} from './retainer-app/retainer-app.js';
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header>
+      <div class="flex-container">
+        <button id="new_sheets">New</button>
+        <h1>Retainers</h1>
+        <button id="more_sheets">More</button>
+      </div>
+    </header>
+
+    <retainer-app></retainer-app>
+
+    <div id="toast"></div>
+    <footer>Kudos to Skarpskytten (<a href="https://www.rollspel.nu/threads/s%C3%A5-jag-gjorde-ett-system-f%C3%B6r-att-g%C3%B6ra-osr-retainers.79094/">Source</a>)</footer>
+  </body>
+
+  <script>
+    document.getElementById('new_sheets').addEventListener('click', () => {
+      document.dispatchEvent(new Event('new-sheets'));
+    });
+
+    document.getElementById('more_sheets').addEventListener('click', () => {
+      document.dispatchEvent(new Event('more-sheets'));
+    });
+  </script>
+</html>
