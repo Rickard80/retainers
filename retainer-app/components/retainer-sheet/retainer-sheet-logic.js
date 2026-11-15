@@ -82,9 +82,7 @@ export class Character {
     let highestAbilityObj = {'type': 'str', 'modifier': -5};
     let ability = '', modifier = 0;
 
-    for (var i = 0; i < this.abilityList.length; i++) {
-      ability = this.abilityList[i];
-
+    for (const ability of this.abilityList) {
       if (ability != 'cha') {
         modifier = this.abilityModifierTable( abilityPool.roll() );
       } else {
@@ -122,8 +120,9 @@ export class Character {
   }
 
   getDescription() {
-    let characterDescription = this.distinctiveFeature.last ? `${this.background} ${this.distinctiveFeature.text}`
-                                                            : `${this.distinctiveFeature.text} ${this.background}`;
+    let characterDescription = this.distinctiveFeature.last
+      ? `${this.background} ${this.distinctiveFeature.text}`
+      : `${this.distinctiveFeature.text} ${this.background}`;
 
     return `${characterDescription} (${this.personality})`.toLowerCase();
   }
@@ -182,10 +181,6 @@ export class Character {
     background += occupation[score];
 
     return background;
-  }
-
-  #checkVowel(firstLetter) {
-    return ('aouei'.indexOf(firstLetter) == -1) ? 'a' : 'an';
   }
 
   #distinctiveFeatureTable() {

@@ -1,14 +1,14 @@
-import {RetainerElement} from './retainer-element.js';
+import {CustomRetainerElement} from './custom-retainer-element.js';
 import {RetainerSheet} from './components/retainer-sheet/retainer-sheet.js';
 
-export class RetainerApp extends RetainerElement {
+export class RetainerApp extends CustomRetainerElement {
+  #mainContentEl;
   minSheets = 2;
   maxSheets = 50;
-  retainerSheetEl = HTMLElement;
 
   render(content) {
-    this.retainerSheetEl = content.querySelector('retainer-sheet').cloneNode(true);
-    this.generateNew(content);
+    this.#mainContentEl = content.getElementById('content');
+    this.generateNew(this.#mainContentEl);
 
     document.addEventListener('new-sheets',  () => { this.generateNew() });
     document.addEventListener('more-sheets', () => { this.generateMore() });
@@ -19,20 +19,16 @@ export class RetainerApp extends RetainerElement {
     this.generateMore(content);
   }
 
-  generateMore(content = this.shadowRoot) {
+  generateMore(content = this.#mainContentEl) {
     this.numberOfSheets = this.#calculateNumberSheets();
 
     for (var i = 0; i < this.numberOfSheets; i++) {
-      content.appendChild( this.fillSheet(this.retainerSheetEl) );
+      content.appendChild( new RetainerSheet() );
     }
   }
 
-  removeAllElements(content = this.shadowRoot) {
-    let sheets = content.querySelectorAll('retainer-sheet');
-
-    for (let sheet of sheets) {
-      content.removeChild(sheet);
-    }
+  removeAllElements() {
+    this.#mainContentEl.textContent = '';
   }
 
   #calculateNumberSheets() {
@@ -42,12 +38,6 @@ export class RetainerApp extends RetainerElement {
     let maxSheetsPerColumns = Math.round(window.innerHeight / sheetHeight);
 
     return Math.min(Math.max(maxSheetsPerRow * maxSheetsPerColumns, this.minSheets), this.maxSheets);
-  }
-
-  fillSheet(retainerSheetEl) {
-    let newSheet = retainerSheetEl.cloneNode(true);
-
-    return newSheet;
   }
 }
 

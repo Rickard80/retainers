@@ -1,4 +1,4 @@
-export class RetainerElement extends HTMLElement {
+export class CustomRetainerElement extends HTMLElement {
   content = HTMLElement
 
   get is() {
@@ -26,12 +26,13 @@ export class RetainerElement extends HTMLElement {
     });
   }
 
+  // This method is intended to be overridden by subclasses to define how the content should be rendered.
   render(content) {
 
   }
 
   updateElement(property, selector, input) {
-    let src = this.content || this.shadowRoot;
+    let src = this.content ?? this.shadowRoot;
     let elements = src.querySelectorAll(selector);
 
     for (var i = 0; i < elements.length; i++) {
@@ -47,20 +48,20 @@ export class RetainerElement extends HTMLElement {
     this.updateElement('innerHTML', selector, html);
   }
 
-  loadTemplate() {
+  async loadTemplate() {
     let path = this.folder + this.is + '/';
     let fullPath = path + this.is + '-template.html';
 
-    return fetch(fullPath)
-      .then(response => response.text())
-      .then((text) => {
-        let html = new DOMParser().parseFromString(text, 'text/html');
-        let templateContent = html.querySelector('template').content;
-        return templateContent;
-      }).catch(error => {
-        console.error(error);
-      });
+    try {
+      const response = await fetch(fullPath);
+      const text = await response.text();
+      let html = new DOMParser().parseFromString(text, 'text/html');
+      let templateContent = html.querySelector('template').content;
+      return templateContent;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 
-customElements.define('retainer-element', RetainerElement);
+customElements.define('custom-retainer-element', CustomRetainerElement);

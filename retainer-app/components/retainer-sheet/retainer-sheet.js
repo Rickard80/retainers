@@ -1,7 +1,7 @@
-import {RetainerElement} from '../../retainer-element.js';
+import {CustomRetainerElement} from '../../custom-retainer-element.js';
 import {Character} from './retainer-sheet-logic.js';
 
-export class RetainerSheet extends RetainerElement {
+export class RetainerSheet extends CustomRetainerElement {
   character = {};
 
   get folder() {
@@ -10,10 +10,8 @@ export class RetainerSheet extends RetainerElement {
 
   render() {
     let character = new Character();
-    let abilityShort = '';
 
-    for (var i = 0; i < character.abilityList.length; i++) {
-      abilityShort = character.abilityList[i];
+    for (const abilityShort of character.abilityList) {
       this.updateTextContent('#ability_' + abilityShort, character[abilityShort]);
     }
 
