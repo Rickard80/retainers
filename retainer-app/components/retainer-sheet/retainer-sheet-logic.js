@@ -44,13 +44,14 @@ class DicePool {
 }
 
 export class Character {
-  str;
-  dex;
-  con;
-  int;
-  wis;
-  cha;
-  hp;
+  abilities = {
+    str: 0,
+    dex: 0,
+    con: 0,
+    int: 0,
+    wis: 0,
+    cha: 0
+  };
   gender;
   alignment;
   background;
@@ -70,8 +71,6 @@ export class Character {
     },
     'shield': '',
   };
-  abilityList = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
-
 
   constructor() {
     this.#generateAbilities();
@@ -80,13 +79,13 @@ export class Character {
   #generateAbilities() {
     let abilityPool = new DicePool('3d6');
     let highestAbilityObj = {'type': 'str', 'modifier': -5};
-    let ability = '', modifier = 0;
+    let modifier = 0;
 
-    for (const ability of this.abilityList) {
-      if (ability != 'cha') {
-        modifier = this.abilityModifierTable( abilityPool.roll() );
-      } else {
+    for (const ability in this.abilities) {
+      if (ability == 'cha') {
         modifier = this.charismaModifierTable( abilityPool.roll() );
+      } else {
+        modifier = this.abilityModifierTable( abilityPool.roll() );
       }
 
       if (highestAbilityObj.modifier <= modifier) {
@@ -94,12 +93,12 @@ export class Character {
         highestAbilityObj.modifier = modifier;
       }
 
-      this[ability] = modifier;
+      this.abilities[ability] = modifier;
     }
 
     this.#swapStrWith(highestAbilityObj);
 
-    this.hp = this.con + randomize(8);
+    this.hp = Math.max(1, this.abilities.con + randomize(8));
     this.gender = this.#genderTable();
     this.alignment = this.#alignmentTable();
     this.background = this.#backgroundTable();
@@ -135,8 +134,8 @@ export class Character {
   }
 
   #swapStrWith(highestAbilityObj) {
-    this[highestAbilityObj.type] = this.str;
-    this.str = highestAbilityObj.modifier;
+    this.abilities[highestAbilityObj.type] = this.abilities.str;
+    this.abilities.str = highestAbilityObj.modifier;
   }
 
   #genderTable() {

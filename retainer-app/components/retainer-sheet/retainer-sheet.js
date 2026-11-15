@@ -11,8 +11,8 @@ export class RetainerSheet extends CustomRetainerElement {
   render() {
     let character = new Character();
 
-    for (const abilityShort of character.abilityList) {
-      this.updateTextContent('#ability_' + abilityShort, character[abilityShort]);
+    for (const abilityShort in character.abilities) {
+      this.updateTextContent('#ability_' + abilityShort, character.abilities[abilityShort]);
     }
 
     this.updateTextContent('#hit_points', character.hp);
